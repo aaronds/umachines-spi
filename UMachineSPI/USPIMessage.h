@@ -29,6 +29,7 @@ class USPIMessage : public UMessage {
 		uint8_t bitOrder;
 		uint8_t clockDivider;
 		uint8_t dataMode;
+		uint8_t clockEnablePin;
 
 };
 

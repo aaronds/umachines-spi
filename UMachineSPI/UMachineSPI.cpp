@@ -1,4 +1,5 @@
 #include "UMachineSPI.h"
+#include <WProgram.h>
 
 UMachineSPI::UMachineSPI(){
 	configured = false;
@@ -20,6 +21,7 @@ UMessage *UMachineSPI::receive(UMessage *msg){
 					if(byteIndex < active->length){
 						SPDR = active->buffer[byteIndex];
 					}else{
+						digitalWrite(active->clockEnablePin,HIGH);
 						send(active,active->from);
 						state = USPINext;
 					}
@@ -40,6 +42,8 @@ UMessage *UMachineSPI::receive(UMessage *msg){
 				}
 
 				configure();
+
+				digitalWrite(active->clockEnablePin,LOW);
 
 				SPDR = active->buffer[byteIndex];
 				state = USPIActive;
